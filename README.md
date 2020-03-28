@@ -1,10 +1,16 @@
 # RaspberryPi4
 My Own Manual to set my _Raspberry Pi 4 Model B_ with _Kali Linux ARM64_
 
+
+
+
+
 ## Creating your runnable SD Card
 
 ### Getting the OS and SD buider
+
 #### Kali
+
 * Go to the Offensive Securitity from [HERE](https://www.offensive-security.com/kali-linux-arm-images/)
 * RaspberryPi Foundation options
 * Find your board model
@@ -22,19 +28,24 @@ My Own Manual to set my _Raspberry Pi 4 Model B_ with _Kali Linux ARM64_
   * It will request actions on each step. Follow them.
 * Safe remove your SD card ajecting It or umounting It from your SO(Windows/Linux)
 
-
+___
 ## Booting your Raspberry Pi
 * Disconect verything from the board
 * Put the SD Card into the SD Card Slot
 * Connect the Energy Source and the other things
 * Wait the boot happens
-
+___
 ## Configuring your new awesome mini PC
+
+> To see the modifications, you need to reboot the system.
+>
+> Ok?
 
 If you have an HDMI Monitor with 1920x1080(1080p), then you can __copy__ this [config.txt](./boot/config.txt) to your `/boot/config.txt`
 
-And than loog to this __config.txt guide__ to make your own adjusts following [THIS LINK](http://rpf.io/configtxt).
+And take a look in the official __config.txt guide__ to make your own adjusts under [THIS LINK](http://rpf.io/configtxt).
 
+___
 ## Installing Docker
 
 * Add Docker PGP key
@@ -75,12 +86,14 @@ And than loog to this __config.txt guide__ to make your own adjusts following [T
   sudo docker run hello-world
   ```
 
-# References
+___
+## References
 * [Raspberrypi config.txt](http://rpf.io/configtxt)
 * [RPi-config](https://github.com/Evilpaul/RPi-config)
 * [Installing Docker in Kali Linux](https://medium.com/@airman604/installing-docker-in-kali-linux-2017-1-fbaa4d1447fe)
 
-# Regards 
+___
+## Regards 
 * [Paul Young - Evilpaul](https://github.com/Evilpaul)
 * [syb0rg](https://github.com/syb0rg)
 * [Airman](https://github.com/airman604)
