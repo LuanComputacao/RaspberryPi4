@@ -50,40 +50,40 @@ ___
 
 * Add Docker PGP key
   ```
-  curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+  curl -fsSL https://download.docker.com/linux/debian/gpg | $ sudoapt-key add -
   ```
 * Add __ONE__ Docker APT repository
   * 64 bits
     ```
-    echo 'deb [arch=arm64] https://download.docker.com/linux/debian buster stable' | sudo tee /etc/apt/sources.list.d/docker.list
+    echo 'deb [arch=arm64] https://download.docker.com/linux/debian buster stable' | $ sudotee /etc/apt/sources.list.d/docker.list
     ```
   * 32 bits
     ```
-    echo 'deb [arch=armhf] https://download.docker.com/linux/debian buster stable' | sudo tee /etc/apt/sources.list.d/docker.list
+    echo 'deb [arch=armhf] https://download.docker.com/linux/debian buster stable' | $ sudotee /etc/apt/sources.list.d/docker.list
     ```
 * Update APT
   ```
-  sudo apt-get update
+  $ sudoapt-get update
   ```
 * Install Docker
   ```
-  sudo apt-get install --no-install-recommends docker-ce
+  $ sudoapt-get install --no-install-recommends docker-ce
   ```
 * Start Docker service
   ```
-  sudo systemctl start docker
+  $ sudosystemctl start docker
   ```
 * Enable Docker service with boot
   ```
-  sudo systemctl enable docker
+  $ sudosystemctl enable docker
   ```
 * If you are __using a non-root user__, add this user to the docker user-group
   ```
-  sudo usermod -aG docker $USER
+  $ sudousermod -aG docker $USER
   ```
 * Test
   ```
-  sudo docker run hello-world
+  $ sudodocker run hello-world
   ```
 
 ___
