@@ -50,16 +50,16 @@ ___
 
 * Add Docker PGP key
   ```
-  curl -fsSL https://download.docker.com/linux/debian/gpg | $ sudoapt-key add -
+  $ curl -fsSL https://download.docker.com/linux/debian/gpg | $ sudoapt-key add -
   ```
 * Add __ONE__ Docker APT repository
   * 64 bits
     ```
-    echo 'deb [arch=arm64] https://download.docker.com/linux/debian buster stable' | $ sudotee /etc/apt/sources.list.d/docker.list
+    $ echo 'deb [arch=arm64] https://download.docker.com/linux/debian buster stable' | $ sudotee /etc/apt/sources.list.d/docker.list
     ```
   * 32 bits
     ```
-    echo 'deb [arch=armhf] https://download.docker.com/linux/debian buster stable' | $ sudotee /etc/apt/sources.list.d/docker.list
+    $ echo 'deb [arch=armhf] https://download.docker.com/linux/debian buster stable' | $ sudotee /etc/apt/sources.list.d/docker.list
     ```
 * Update APT
   ```
