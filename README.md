@@ -4,9 +4,9 @@ My Own Manual to set my _Raspberry Pi 4 Model B_ with _Kali Linux ARM64_
 Tradução para Português(Brazil) [neste LINK](https://translate.google.com/translate?hl=&sl=en&tl=pt&u=https%3A%2F%2Fgithub.com%2FLuanComputacao%2FRaspberryPi4)
 
 ## You can find a place to __Buy One__
-* (FlipFlop - Brazil)[https://www.filipeflop.com/?s=Raspberry+Pi+4&post_type=product]
-* (Raspberry Pi Approved Resellers - countries)[https://www.raspberrypi.org/products/raspberry-pi-4-model-b/#find-reseller]
-* (AliExpress - international )[https://pt.aliexpress.com/wholesale?SearchText=raspberry+pi+4]
+* [FlipFlop - Brazil](https://www.filipeflop.com/?s=Raspberry+Pi+4&post_type=product)
+* [Raspberry Pi Approved Resellers - countries](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/#find-reseller)
+* [AliExpress - international](https://pt.aliexpress.com/wholesale?SearchText=raspberry+pi+4)
 ___
 ## Creating your runnable SD Card
 
