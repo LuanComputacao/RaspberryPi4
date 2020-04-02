@@ -40,6 +40,14 @@ ___
 ___
 ## Configuring your new awesome mini PC
 
+
+### Enable cgroup
+Edit the `/boot/cmdline.txt` and ad the following text at the end of line (use a space before it)
+```
+ cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
+```
+
+### Other settings 
 > To see the modifications, you need to reboot the system.
 >
 > Ok?
