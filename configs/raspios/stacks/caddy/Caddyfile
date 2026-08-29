@@ -20,7 +20,11 @@
 		}
 	}
 
-	handle /beszel* {
+	handle /beszel {
+		redir /beszel/ 308
+	}
+	# Beszel serve /assets e /api na raiz; stripa o prefixo.
+	handle_path /beszel* {
 		reverse_proxy beszel:8090 {
 			flush_interval -1
 			transport http {
