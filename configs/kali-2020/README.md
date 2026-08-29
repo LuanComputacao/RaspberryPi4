@@ -13,19 +13,19 @@ O README original está em [README.original.md](./README.original.md).
 
 Não há overclock. O `arm_freq=800` comentado é o comentário padrão de Pi 1, não uma receita de Pi 4.
 
-## Não use neste Bookworm
+## Não use no Raspberry Pi OS desta placa
 
-Copiar `boot/config.txt` para a Pi atual (**Raspberry Pi OS Bookworm**) é incompatível:
+Copiar `boot/config.txt` para a Pi atual é incompatível:
 
 - `hdmi_group` / `hdmi_mode` / `framebuffer_*` são **ignorados** com `dtoverlay=vc4-kms-v3d` (KMS cheio).
-- `kernel=kernel8l-alt.img` aponta para o kernel da **Kali 2020**. No Bookworm esse arquivo não existe → **não boota**.
-- `dtoverlay=vc4-fkms-v3d` (comentado aqui) seria um *downgrade* em relação ao KMS atual e quebra o labwc/Wayland.
-- O caminho de boot no Bookworm é `/boot/firmware/config.txt`, não `/boot/config.txt`.
+- `kernel=kernel8l-alt.img` aponta para o kernel da **Kali 2020**. No RaspiOS esse arquivo não existe → **não boota**.
+- `dtoverlay=vc4-fkms-v3d` (comentado aqui) seria um *downgrade* e quebra o labwc/Wayland.
+- O caminho de boot atual é `/boot/firmware/config.txt`, não `/boot/config.txt`.
 
-O equivalente moderno do 1080p está em [`../bookworm/`](../bookworm/) (kanshi, não firmware HDMI).
+O equivalente moderno do 1080p está em [`../raspios/`](../raspios/) (kanshi, não firmware HDMI).
 
-O equivalente moderno do cgroup de memória ainda é o mesmo fragmento de cmdline; veja o README do Bookworm.
+O equivalente moderno do cgroup de memória está no cmdline do snapshot [raspios](../raspios/).
 
 ## Docker do README original
 
-O guia usa `apt-key` e o repositório Debian **buster**. Não siga isso em Bookworm: o Docker já está instalado na Pi atual.
+O guia usa `apt-key` e o repositório Debian **buster**. Não siga isso no RaspiOS: o Docker já está instalado na Pi atual (`docker-ce` oficial).

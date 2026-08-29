@@ -11,7 +11,7 @@ Hardware
   SD        mmcblk0 119.1G (SD128, 01/2021)
 
 OS
-  Debian GNU/Linux 12 (bookworm) — Raspberry Pi OS
+  Raspberry Pi OS (Debian 12) 64-bit, pi-gen stage4 2024-11-19
   Linux raspberrypi 6.12.96+rpt-rpi-v8 aarch64
   Firmware VideoCore  May 21 2026
   EEPROM              2026-05-17

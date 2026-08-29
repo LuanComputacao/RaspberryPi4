@@ -1,4 +1,4 @@
-# Snapshot Raspberry Pi OS Bookworm (2026-08-29)
+# Raspberry Pi OS — esta placa (2026-08-29)
 
 Placa: **Raspberry Pi 4 Model B Rev 1.2**, 4 GB (`c03112`).  
 Rede: **`192.168.1.100/24`** estático no Wi‑Fi (`ExampleNetwork_5G`).  
@@ -18,6 +18,8 @@ Acesso: `ssh raspberry` (chave em `authorized_keys`).
 | [nm/99-wifi-powersave-off.dispatcher](./nm/99-wifi-powersave-off.dispatcher) | `/etc/NetworkManager/dispatcher.d/99-wifi-powersave-off` (exec) |
 | [nm/wifi-connection.txt](./nm/wifi-connection.txt) | referência NM (IPv4 manual; sem PSK) |
 | [systemd/wifi-powersave-off.service](./systemd/wifi-powersave-off.service) | `/etc/systemd/system/wifi-powersave-off.service` |
+| [kmscon/kmscon.conf](./kmscon/kmscon.conf) | `/etc/kmscon/kmscon.conf` |
+| [systemd/kmsconvt-tty1-autologin.conf](./systemd/kmsconvt-tty1-autologin.conf) | `/etc/systemd/system/kmsconvt@tty1.service.d/autologin.conf` |
 
 O `cmdline.txt` tem `PARTUUID=5c94f38d-02` **desta** SD. Não copie o arquivo inteiro para outro cartão; preserve o `PARTUUID` local e só acrescente `cgroup_enable=memory cgroup_memory=1`.
 
@@ -57,6 +59,16 @@ Power save IEEE **desligado**: NM `wifi.powersave=2`, dispatcher no `up` do `wla
 
 Override de usuário com `Hidden=true`. Pacote permanece instalado; não inicia no login.
 
+## Console HDMI (kmscon)
+
+O tty Linux não desenha TTF. A TV usa **kmscon** com UbuntuMono Nerd Font **Mono**, autologin `luancomputacao`, `TERM=xterm-256color`.
+
+## Boot sem GUI
+
+`multi-user.target`; LightDM disabled. SSH, Docker, NetworkManager sobem. Para voltar ao gráfico: ver [SOFTWARE.md](./SOFTWARE.md).
+
 ## Serviços desligados nesta placa (não versionados como unit files)
 
 `ModemManager`, `cups`, `cups-browsed`, `triggerhappy`.
+
+Inventário completo do extra: [SOFTWARE.md](./SOFTWARE.md).
