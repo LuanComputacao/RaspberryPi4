@@ -15,6 +15,8 @@ Caddy escuta **80** e **3000** em todas as interfaces da placa (LAN `192.168.1.1
 
 Live: `/opt/stacks/`. Rede Docker `edge`.
 
+**Senhas:** [CREDENCIAIS.md](./CREDENCIAIS.md) — `cat /opt/stacks/.credentials` na Pi (Dozzle e WUD). Dockge e Beszel são as contas do primeiro acesso no browser.
+
 ## Por que assim
 
 - **Caddy**, não Traefik: poucos serviços, Caddyfile no git, menos RAM.
@@ -67,16 +69,11 @@ sudo tailscale serve --bg --yes --https=8443 3000
 
 ## Primeiro uso
 
-1. **Dockge** — cria a senha no primeiro acesso. Stacks = pastas em `/opt/stacks`.
-2. **Dozzle** — usuário `luancomputacao`. Senha em `/opt/stacks/.credentials` (600). Hash do WUD em `/opt/stacks/wud/admin.hash`.
-3. **Beszel** — cria o admin no browser. Settings → Add system. Host/IP: `/beszel_socket/beszel.sock`. Copia KEY e TOKEN para `/opt/stacks/.env` (`BESZEL_KEY`, `BESZEL_TOKEN`). Depois:
+Ver [CREDENCIAIS.md](./CREDENCIAIS.md). Resumo:
 
-   ```bash
-   docker compose --env-file /opt/stacks/.env \
-     -f /opt/stacks/beszel/compose.yaml --profile agent up -d
-   ```
-
-4. **WUD** — basic auth, mesmas credenciais do `.credentials`. Só lista updates. Aplicar = Dockge / `docker compose pull && up`.
+1. **Dozzle** e **WUD** — `luancomputacao` + senha em `/opt/stacks/.credentials`.
+2. **Dockge** e **Beszel** — conta que você criou no browser; não está nesse arquivo.
+3. Agent do Beszel já sobe com `BESZEL_KEY` / `BESZEL_TOKEN` no `.env` da placa.
 
 ## RAM (limites no compose)
 

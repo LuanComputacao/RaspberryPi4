@@ -76,3 +76,5 @@ Inventário completo do extra: [SOFTWARE.md](./SOFTWARE.md).
 ## Kit Compose
 
 Caddy / Dockge / Dozzle / Beszel / WUD em [stacks/](./stacks/). Caddy na LAN (`192.168.1.100:80` e `:3000`). Tailscale no host para fora de casa.
+
+Senhas: [stacks/CREDENCIAIS.md](./stacks/CREDENCIAIS.md). Na Pi: `cat /opt/stacks/.credentials`.

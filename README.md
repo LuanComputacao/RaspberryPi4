@@ -21,6 +21,8 @@ Inventário do que **não vem na imagem padrão:** [configs/raspios/SOFTWARE.md]
 
 Kit Compose (Caddy + Dockge + Dozzle + Beszel + WUD): [configs/raspios/stacks/](configs/raspios/stacks/). Na LAN: **http://192.168.1.100/kit/**.
 
+Senhas dos serviços: [configs/raspios/stacks/CREDENCIAIS.md](configs/raspios/stacks/CREDENCIAIS.md) — na Pi, `cat /opt/stacks/.credentials`.
+
 ## Esta placa (2026-08-29)
 
 - Kernel **6.12.96**, EEPROM 2026-05-17.

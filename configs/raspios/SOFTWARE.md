@@ -69,7 +69,7 @@ Não vem na imagem. Sobe com Docker; ver [stacks/README.md](./stacks/README.md).
 | `dockge` | `louislam/dockge:1` | UI dos compose em `/opt/stacks` |
 | `dozzle` | `amir20/dozzle` | Logs; auth simple; sem shell/actions |
 | `beszel` | `henrygd/beszel` | Hub de métricas (`/beszel`, também `127.0.0.1:8090`) |
-| `beszel-agent` | `henrygd/beszel-agent` | Profile `agent`; depois do 1º login |
+| `beszel-agent` | `henrygd/beszel-agent` | Métricas do host; KEY/TOKEN no `.env` da Pi |
 | `wud` | `getwud/wud` | Watch a cada 6 h; **sem** auto-update |
 
 Tailscale é pacote no **host** (`tailscaled`), não container.
