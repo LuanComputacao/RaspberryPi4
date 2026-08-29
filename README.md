@@ -28,6 +28,7 @@ A Pi atual (`ssh raspberry` → **`192.168.1.100`**) roda o snapshot **bookworm*
 - Swap: **zram lz4 ~949 MiB**; sem arquivo no SD.
 - Cgroup **memory** ligado no cmdline (Docker consegue limitar RAM).
 - EEPROM bootloader: **2026-05-17**.
+- Cooler 2 fios nos pinos **4 (5 V) e 6 (GND)**, sempre ligado. GPIO 14 livre.
 
 ## Compatibilidade Kali 2020 vs Bookworm
 

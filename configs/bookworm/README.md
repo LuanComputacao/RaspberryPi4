@@ -33,7 +33,7 @@ TV **LG** em HDMI-A-2. Kanshi força **1920×1080@60** nos dois HDMI (o EDID pre
 - `arm_freq=1800`, `over_voltage=4` (overclock; stock desta rev é 1500).
 - `arm_boost=1` sozinho **não** sobe para 1,8 GHz na Rev 1.2.
 - Governor `ondemand`, 600–1800 MHz.
-- Cooler GPIO 14 @ **65 °C** (`gpio-fan` liga/desliga). Limite térmico suave do firmware ~80 °C.
+- Cooler **2 fios nos pinos 4 (5 V) e 6 (GND)** — sempre ligado. Sem overlay `gpio-fan` (GPIO 14 / pino 8 livre).
 - Backup do `config.txt` na placa: `/boot/firmware/config.txt.bak-before-oc`.
 
 ## Energia / Wi‑Fi
