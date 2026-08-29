@@ -1,0 +1,24 @@
+name: dockge
+
+services:
+  dockge:
+    image: louislam/dockge:1
+    container_name: dockge
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-America/Sao_Paulo}
+      DOCKGE_STACKS_DIR: /opt/stacks
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./dockge-data:/app/data
+      - /opt/stacks:/opt/stacks
+    networks:
+      - edge
+    mem_limit: 256m
+    cpus: "1.0"
+    labels:
+      - wud.watch=true
+
+networks:
+  edge:
+    external: true

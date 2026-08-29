@@ -1,0 +1,39 @@
+{
+	auto_https off
+	admin localhost:2019
+}
+
+# Porta única atrás do Tailscale serve / túnel SSH.
+# WUD e Dockge não têm base path: Dockge fica em /, WUD na :3000.
+:80 {
+	handle /kit {
+		redir /kit/ 308
+	}
+	handle_path /kit* {
+		root * /srv
+		file_server
+	}
+
+	handle /dozzle* {
+		reverse_proxy dozzle:8080 {
+			flush_interval -1
+		}
+	}
+
+	handle /beszel* {
+		reverse_proxy beszel:8090 {
+			flush_interval -1
+			transport http {
+				read_timeout 360s
+			}
+		}
+	}
+
+	handle {
+		reverse_proxy dockge:5001
+	}
+}
+
+:3000 {
+	reverse_proxy wud:3000
+}

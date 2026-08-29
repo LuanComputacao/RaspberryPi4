@@ -1,0 +1,35 @@
+name: wud
+
+# Sem trigger docker/compose: só avisa. Update é manual no Dockge.
+services:
+  wud:
+    image: getwud/wud:latest
+    container_name: wud
+    restart: unless-stopped
+    environment:
+      TZ: America/Sao_Paulo
+      WUD_WATCHER_LOCAL_CRON: "0 */6 * * *"
+      WUD_WATCHER_LOCAL_WATCHBYDEFAULT: "true"
+      WUD_AUTH_BASIC_ADMIN_USER: luancomputacao
+      WUD_AUTH_BASIC_ADMIN_HASH__FILE: /run/secrets/wud_hash
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./store:/store
+      - ./admin.hash:/run/secrets/wud_hash:ro
+    networks:
+      - edge
+    mem_limit: 384m
+    cpus: "1.0"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+    labels:
+      - wud.watch=true
+      - wud.tag.include=^\d+\.\d+\.\d+$$
+
+networks:
+  edge:
+    external: true

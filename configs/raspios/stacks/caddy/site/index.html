@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>raspberry — kit</title>
+  <style>
+    :root { color-scheme: dark; }
+    body { font: 16px/1.4 system-ui, sans-serif; margin: 2rem auto; max-width: 40rem; padding: 0 1rem; }
+    h1 { font-size: 1.25rem; font-weight: 600; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 0.5rem 0; }
+    a { color: #8cb4ff; }
+    code { font-size: 0.9em; }
+    p, small { color: #bbb; }
+  </style>
+</head>
+<body>
+  <h1>Kit da placa</h1>
+  <p>Compose no disco. Caddy na porta 80 desta placa, alcançável na LAN.</p>
+  <ul>
+    <li><a href="/">Dockge</a> — stacks Compose</li>
+    <li><a href="/dozzle/">Dozzle</a> — logs ao vivo</li>
+    <li><a href="/beszel/">Beszel</a> — CPU / RAM / disco</li>
+    <li><a id="wud" href="http://192.168.1.100:3000/">WUD</a> — updates (não aplica sozinho)</li>
+  </ul>
+  <script>
+    document.getElementById("wud").href = location.protocol + "//" + location.hostname + ":3000/";
+  </script>
+  <small>Arquivos em <code>/opt/stacks</code>.</small>
+</body>
+</html>

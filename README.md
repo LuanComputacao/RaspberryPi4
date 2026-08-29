@@ -19,6 +19,8 @@ Acesso atual: `ssh raspberry` → **`192.168.1.100`**.
 
 Inventário do que **não vem na imagem padrão:** [configs/raspios/SOFTWARE.md](configs/raspios/SOFTWARE.md).
 
+Kit Compose (Caddy + Dockge + Dozzle + Beszel + WUD): [configs/raspios/stacks/](configs/raspios/stacks/). Na LAN: **http://192.168.1.100/kit/**.
+
 ## Esta placa (2026-08-29)
 
 - Kernel **6.12.96**, EEPROM 2026-05-17.

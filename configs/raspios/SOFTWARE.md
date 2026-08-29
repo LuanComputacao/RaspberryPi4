@@ -10,6 +10,7 @@ O desktop (labwc, Chromium, VLC, CUPS…) **é da imagem**; só não sobe porque
 |---|---|
 | `/etc/apt/sources.list.d/docker.list` | `https://download.docker.com/linux/debian` (stable) |
 | `/etc/apt/sources.list.d/azlux.list` | `http://packages.azlux.fr/debian` |
+| `/etc/apt/sources.list.d/tailscale.list` | `https://pkgs.tailscale.com/stable/debian` |
 
 Debian + `archive.raspberrypi.com` são o padrão. Não há NodeSource nem vscode.list da Microsoft.
 
@@ -24,6 +25,7 @@ Debian + `archive.raspberrypi.com` são o padrão. Não há NodeSource nem vscod
 | `docker-buildx-plugin` | 0.36.1 | Docker | Buildx |
 | `containerd.io` | 2.3.4 | Docker | Runtime |
 | `docker-ctop` | 0.7.7 | Azlux | TUI de containers |
+| `tailscale` | 1.102.3 | Tailscale | VPN mesh no host |
 
 ## Apt extra (repos oficiais, não está no stage4)
 
@@ -56,6 +58,21 @@ Provavelmente **já vinham** no stage4: `git`, `curl`, `htop`, `build-essential`
 | VS Code Server + GitLens/Docker | `~/.vscode-server` (~227 MiB) | Remote |
 
 Não há: snap, flatpak com apps, rustup, Go, pyenv, pipx.
+
+## Kit Compose (`/opt/stacks`, 2026-08-29)
+
+Não vem na imagem. Sobe com Docker; ver [stacks/README.md](./stacks/README.md).
+
+| Container | Imagem | Função |
+|---|---|---|
+| `caddy` | `caddy:2.10-alpine` | Reverse proxy na LAN `:80` e `:3000` |
+| `dockge` | `louislam/dockge:1` | UI dos compose em `/opt/stacks` |
+| `dozzle` | `amir20/dozzle` | Logs; auth simple; sem shell/actions |
+| `beszel` | `henrygd/beszel` | Hub de métricas (`/beszel`, também `127.0.0.1:8090`) |
+| `beszel-agent` | `henrygd/beszel-agent` | Profile `agent`; depois do 1º login |
+| `wud` | `getwud/wud` | Watch a cada 6 h; **sem** auto-update |
+
+Tailscale é pacote no **host** (`tailscaled`), não container.
 
 ## Serviços extras habilitados
 

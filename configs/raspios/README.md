@@ -72,3 +72,7 @@ O tty Linux não desenha TTF. A TV usa **kmscon** com UbuntuMono Nerd Font **Mon
 `ModemManager`, `cups`, `cups-browsed`, `triggerhappy`.
 
 Inventário completo do extra: [SOFTWARE.md](./SOFTWARE.md).
+
+## Kit Compose
+
+Caddy / Dockge / Dozzle / Beszel / WUD em [stacks/](./stacks/). Caddy na LAN (`192.168.1.100:80` e `:3000`). Tailscale no host para fora de casa.

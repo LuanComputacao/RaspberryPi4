@@ -1,0 +1,12 @@
+.env
+.credentials
+wud/auth.env
+wud/admin.hash
+**/users.yml
+**/beszel_data/
+**/beszel_socket/
+**/beszel_agent_data/
+**/caddy-data/
+**/caddy-config/
+**/store/
+**/dockge-data/
