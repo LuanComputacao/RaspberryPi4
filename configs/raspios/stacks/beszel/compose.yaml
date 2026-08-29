@@ -20,13 +20,10 @@ services:
     labels:
       - wud.watch=true
 
-  # Sobe depois do 1º login: preencher BESZEL_KEY e BESZEL_TOKEN no .env
-  # e `docker compose --profile agent up -d`.
   beszel-agent:
     image: henrygd/beszel-agent:latest
     container_name: beszel-agent
     restart: unless-stopped
-    profiles: ["agent"]
     network_mode: host
     volumes:
       - ./beszel_agent_data:/var/lib/beszel-agent

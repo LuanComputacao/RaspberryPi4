@@ -2,6 +2,7 @@
 .credentials
 wud/auth.env
 wud/admin.hash
+beszel/.agent-token
 **/users.yml
 **/beszel_data/
 **/beszel_socket/
