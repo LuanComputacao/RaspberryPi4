@@ -1,7 +1,3 @@
-# Raspberry Pi OS Bookworm — copiado de /boot/firmware/config.txt
-# Placa: Raspberry Pi 4 Model B Rev 1.2 (2026-08-29)
-# NÃO misturar com configs/kali-2020/boot/config.txt
-
 # For more options and information see
 # http://rptl.io/configtxt
 # Some settings may impact device functionality. See link above for details
@@ -18,7 +14,6 @@ dtparam=audio=on
 # /boot/firmware/overlays/README
 
 # Automatically load overlays for detected cameras
-# Sem câmera nesta placa; evita probe no boot.
 camera_auto_detect=0
 
 # Automatically load overlays for detected DSI displays
@@ -27,12 +22,12 @@ display_auto_detect=1
 # Automatically load initramfs files, if found
 auto_initramfs=1
 
-# Enable DRM VC4 V3D driver (full KMS; padrão Bookworm)
+# Enable DRM VC4 V3D driver
 dtoverlay=vc4-kms-v3d
 max_framebuffers=2
 
 # Don't have the firmware create an initial video= setting in cmdline.txt.
-# Use the kernel's default instead. Resolução HDMI fica a cargo do KMS + kanshi.
+# Use the kernel's default instead.
 disable_fw_kms_setup=1
 
 # Run in 64-bit mode
@@ -42,8 +37,11 @@ arm_64bit=1
 disable_overscan=1
 
 # Run as fast as firmware / board allows
-# Em Rev 1.2 isto NÃO sobe para 1.8 GHz (só Rev 1.4+ / Pi 400). Teto = 1.5 GHz.
 arm_boost=1
+
+# Overclock Rev 1.2 (stock 1500; 1800 is unofficial on this revision)
+over_voltage=4
+arm_freq=1800
 
 [cm4]
 # Enable host mode on the 2711 built-in XHCI USB controller.

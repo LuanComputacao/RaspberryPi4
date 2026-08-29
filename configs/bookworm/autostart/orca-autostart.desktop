@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Orca Screen Reader
+Exec=orca
+Hidden=true
+NoDisplay=true
+X-GNOME-AutoRestart=false
+X-GNOME-Autostart-enabled=false

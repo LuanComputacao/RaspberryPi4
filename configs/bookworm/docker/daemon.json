@@ -1,0 +1,14 @@
+{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3"
+  },
+  "storage-driver": "overlay2",
+  "live-restore": true,
+  "userland-proxy": false,
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "features": {
+    "buildkit": true
+  }
+}

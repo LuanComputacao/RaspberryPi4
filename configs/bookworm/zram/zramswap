@@ -1,0 +1,4 @@
+# Pi 4 4GB: zram instead of SD swap
+ALGO=lz4
+PERCENT=25
+PRIORITY=100

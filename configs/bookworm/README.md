@@ -1,70 +1,62 @@
-# Snapshot Raspberry Pi OS Bookworm (2026)
+# Snapshot Raspberry Pi OS Bookworm (2026-08-29)
 
-Configuração **atual** da placa em `192.168.1.10` (hostname `raspberrypi`), capturada em 2026-08-29.
-
-Hardware: **Raspberry Pi 4 Model B Rev 1.2**, 4 GB, revisão `c03112`.
+Placa: **Raspberry Pi 4 Model B Rev 1.2**, 4 GB (`c03112`).  
+Rede: **`192.168.1.100/24`** estático no Wi‑Fi (`ExampleNetwork_5G`).  
+Acesso: `ssh raspberry` (chave em `authorized_keys`).
 
 ## Arquivos e destino na placa
 
-| Arquivo neste repo | Destino na Pi |
+| Neste repo | Destino |
 |---|---|
 | [boot/firmware/config.txt](./boot/firmware/config.txt) | `/boot/firmware/config.txt` |
 | [boot/firmware/cmdline.txt](./boot/firmware/cmdline.txt) | `/boot/firmware/cmdline.txt` |
 | [kanshi/config](./kanshi/config) | `~/.config/kanshi/config` |
+| [autostart/orca-autostart.desktop](./autostart/orca-autostart.desktop) | `~/.config/autostart/orca-autostart.desktop` |
+| [docker/daemon.json](./docker/daemon.json) | `/etc/docker/daemon.json` |
+| [zram/zramswap](./zram/zramswap) | `/etc/default/zramswap` |
+| [nm/99-wifi-powersave-off.conf](./nm/99-wifi-powersave-off.conf) | `/etc/NetworkManager/conf.d/99-wifi-powersave-off.conf` |
+| [nm/99-wifi-powersave-off.dispatcher](./nm/99-wifi-powersave-off.dispatcher) | `/etc/NetworkManager/dispatcher.d/99-wifi-powersave-off` (exec) |
+| [nm/wifi-connection.txt](./nm/wifi-connection.txt) | referência NM (IPv4 manual; sem PSK) |
+| [systemd/wifi-powersave-off.service](./systemd/wifi-powersave-off.service) | `/etc/systemd/system/wifi-powersave-off.service` |
 
-O `cmdline.txt` contém `PARTUUID=5c94f38d-02` desta SD. **Não copie o cmdline inteiro** para outro cartão.
+O `cmdline.txt` tem `PARTUUID=5c94f38d-02` **desta** SD. Não copie o arquivo inteiro para outro cartão; preserve o `PARTUUID` local e só acrescente `cgroup_enable=memory cgroup_memory=1`.
 
-## HDMI 1080p (substitui o `hdmi_mode=82` de 2020)
+## HDMI
 
-Bookworm usa **full KMS** (`dtoverlay=vc4-kms-v3d`) + `disable_fw_kms_setup=1`.  
+Full KMS (`dtoverlay=vc4-kms-v3d`) + `disable_fw_kms_setup=1`.  
 `hdmi_group` / `hdmi_mode` / `framebuffer_*` **não têm efeito**.
 
-A TV é uma **LG** no conector **HDMI-A-2**. O kanshi antigo apontava para HDMI-A-1, então o kernel escolhia o modo preferido do EDID: `4096x2160@30` (4K cinema).
-
-Perfis atuais: `1920x1080@60` em HDMI-A-1 e HDMI-A-2.
-
-Para aplicar na sessão (já aplicado nesta placa):
-
-```bash
-export XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-0
-wlr-randr --output HDMI-A-2 --mode 1920x1080@60.000000
-```
-
-Para voltar ao 4K:
-
-```bash
-wlr-randr --output HDMI-A-2 --mode 4096x2160@30.000000
-```
+TV **LG** em HDMI-A-2. Kanshi força **1920×1080@60** nos dois HDMI (o EDID preferia 4096×2160@30).
 
 ## Clocks
 
-- Governor: `ondemand`, 600–**1500** MHz (4 núcleos no mesmo domínio).
-- `arm_boost=1` **não** libera 1,8 GHz nesta Rev 1.2.
-- Sem overclock. `throttled=0x0` com fonte Xiaomi MDY-11-EQ (5 V / 3 A, USB-A).
+- `arm_freq=1800`, `over_voltage=4` (overclock; stock desta rev é 1500).
+- `arm_boost=1` sozinho **não** sobe para 1,8 GHz na Rev 1.2.
+- Governor `ondemand`, 600–1800 MHz.
+- Cooler GPIO 14 @ 80 °C (`gpio-fan`). Limite térmico suave do firmware também ~80 °C.
+- Backup do `config.txt` na placa: `/boot/firmware/config.txt.bak-before-oc`.
 
-## Energia
+## Energia / Wi‑Fi
 
-A fonte anterior gerava `throttled=0x50005` (undervoltage + throttle) mesmo ociosa, em 4K. Com a Xiaomi e 1080p: `throttled=0x0`.
+Fonte Xiaomi MDY-11-EQ 5 V/3 A USB-A. Sem undervoltage com 1080p.
 
-Pi 4 Rev 1.2 tem o bug dos pinos CC do USB-C; fonte USB-A + cabo 3 A evita o problema de PD.
+Power save IEEE **desligado**: NM `wifi.powersave=2`, dispatcher no `up` do `wlan0`, oneshot `wifi-powersave-off.service`. Sem isso o SSH inbound some até a Pi transmitir.
 
-## Estado extra da sessão (não está nos arquivos de boot)
+## Docker
 
-Já aplicado na placa, mas não é `config.txt`:
+- `docker-ce` **29.7.2**, Compose plugin **v5.5.0**, `overlay2`, cgroup systemd, logs 10m×3, `userland-proxy=false`, BuildKit.
+- Swarm **inativo** (certificado antigo expirado; agent Portainer removido).
+- Cgroup memory **habilitado** no cmdline.
 
-- Orca / leitor de tela desligado (`screen-reader-enabled=false`).
-- `ModemManager`, `cups`, `cups-browsed`, `triggerhappy` disabled.
-- Docker continua enabled (agent Portainer parado há meses).
-- EEPROM do bootloader ainda em **29 Apr 2021**; há update para **11 Feb 2025** (`sudo rpi-eeprom-update -a` + reboot). **Não aplicado.**
+## Swap
 
-## Cgroup de memória (opcional, ainda válido)
+`zram-tools`: lz4, **25% da RAM** (~949 MiB), prio 100.  
+`dphys-swapfile` **disabled**; sem `/var/swap` no SD.
 
-O firmware injeta `cgroup_disable=memory`. Docker sobe, mas não aplica limite de RAM.
+## Orca
 
-Se quiser limits, acrescente no **final** de `/boot/firmware/cmdline.txt` (mesmo fragmento de 2020):
+Override de usuário com `Hidden=true`. Pacote permanece instalado; não inicia no login.
 
-```
-cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
-```
+## Serviços desligados nesta placa (não versionados como unit files)
 
-Depois reboot. Não está ligado nesta captura.
+`ModemManager`, `cups`, `cups-browsed`, `triggerhappy`.

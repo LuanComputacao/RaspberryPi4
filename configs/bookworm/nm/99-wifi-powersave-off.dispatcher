@@ -1,0 +1,13 @@
+#!/bin/sh
+# Keep Wi-Fi radio awake so inbound SSH works after boot / reconnect.
+IFACE=$1
+ACTION=$2
+case "$ACTION" in
+  up|reapply)
+    case "$IFACE" in
+      wlan*|wlx*)
+        /usr/sbin/iw dev "$IFACE" set power_save off 2>/dev/null || true
+        ;;
+    esac
+    ;;
+esac

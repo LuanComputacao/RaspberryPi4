@@ -1,0 +1,9 @@
+connection.id:ExampleNetwork_5G
+connection.interface-name:wlan0
+ipv4.method:manual
+ipv4.addresses:192.168.1.100/24
+ipv4.gateway:192.168.1.1
+ipv4.dns:192.168.1.1,1.1.1.1
+ipv4.ignore-auto-dns:yes
+802-11-wireless.powersave:disable
+802-11-wireless.ssid:ExampleNetwork_5G
