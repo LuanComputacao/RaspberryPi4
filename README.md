@@ -1,110 +1,49 @@
 # RaspberryPi4
-My Own Manual to set my _Raspberry Pi 4 Model B_ with _Kali Linux ARM64_
 
-Tradução para __Português(Brasil)__ [neste LINK](https://translate.google.com/translate?hl=&sl=en&tl=pt&u=https%3A%2F%2Fgithub.com%2FLuanComputacao%2FRaspberryPi4)
+Notas e configs da **Raspberry Pi 4 Model B Rev 1.2** (4 GB).
 
-## You can find a place to __Buy One__
-* [FlipFlop - Brazil](https://www.filipeflop.com/?s=Raspberry+Pi+4&post_type=product)
-* [Raspberry Pi Approved Resellers - countries](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/#find-reseller)
-* [AliExpress - international](https://pt.aliexpress.com/wholesale?SearchText=raspberry+pi+4)
-___
-## Creating your runnable SD Card
+Há **duas gerações**, isoladas. Não misture os arquivos.
 
-### Getting the OS and SD buider
+| Pasta | Quando | Sistema | HDMI |
+|---|---|---|---|
+| [`configs/kali-2020/`](configs/kali-2020/) | mar/abr 2020 | Kali Linux ARM64 (Buster) | firmware legado (`hdmi_mode=82`) |
+| [`configs/bookworm/`](configs/bookworm/) | ago 2026 | Raspberry Pi OS Bookworm 64-bit | KMS + kanshi 1080p60 |
 
-#### Kali
+A Pi atual (`raspberry` / `192.168.1.10`) roda o snapshot **bookworm**.
 
-* Go to the Offensive Securitity from [HERE](https://www.offensive-security.com/kali-linux-arm-images/)
-* RaspberryPi Foundation options
-* Find your board model
-* Download the compressed file
-* Uncompress the `.img` file
-* Don't forget where you had uncompressed the img
+## Qual usar
 
-#### Etcher
-* Download the "flash OS images to SD cards tool" from Belena [HERE](https://www.balena.io/etcher/)
+- **Bookworm (esta placa):** copie só o que está em `configs/bookworm/`. Destinos:
+  - `boot/firmware/config.txt` → `/boot/firmware/config.txt`
+  - `kanshi/config` → `~/.config/kanshi/config`
+  - **não** copie o `cmdline.txt` inteiro para outro cartão (`PARTUUID` é desta SD).
+- **Kali 2020 (arquivo histórico):** `configs/kali-2020/`. Não aplicar em Bookworm — o `kernel=kernel8l-alt.img` impede o boot.
 
-### Flashing the OS to the SD
-* Choose a very good SD card. There are many options like _SanDisk Ultra_
-* Insert the SD in the computer slot
-* Open the Etcher software.
-  * It will request actions on each step. Follow them.
-* Safe remove your SD card ajecting It or umounting It from your SO(Windows/Linux)
+## Compatibilidade resumida
 
-___
-## Booting your Raspberry Pi
-* Disconect verything from the board
-* Put the SD Card into the SD Card Slot
-* Connect the Energy Source and the other things
-* Wait the boot happens
-___
-## Configuring your new awesome mini PC
+O `config.txt` de 2020 **não reproduz** o efeito de 2020 nesta Bookworm:
 
+| Ideia (2020) | Na Kali | No Bookworm desta Pi |
+|---|---|---|
+| Forçar 1080p60 | `hdmi_group=2` + `hdmi_mode=82` | **Ignorado** no KMS. Usar kanshi |
+| Framebuffer 1920×1080 | `framebuffer_*` | Ignorado |
+| Kernel 64-bit Kali | `kernel=kernel8l-alt.img` | Arquivo inexistente → **não boota** |
+| Fake KMS | `vc4-fkms-v3d` (comentado) | Padrão é **full KMS** `vc4-kms-v3d` |
+| Áudio / 64-bit | `dtparam=audio=on`, `arm_64bit=1` | Já presente, redundante |
+| Cgroup p/ Docker | sufixo no cmdline | **Ainda válido**, opcional; não está ligado |
+| Instalar Docker | `apt-key` + repo **buster** | Docker já instalado; não seguir o guia antigo |
 
-### Enable cgroup
-Edit the `/boot/cmdline.txt` and ad the following text at the end of line (use a space before it)
-```
- cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
-```
+Detalhe por arquivo: [configs/kali-2020/README.md](configs/kali-2020/README.md) e [configs/bookworm/README.md](configs/bookworm/README.md).
 
-### Other settings 
-> To see the modifications, you need to reboot the system.
->
-> Ok?
+## Placa atual (ago 2026)
 
-If you have an HDMI Monitor with 1920x1080(1080p), then you can __copy__ this [config.txt](./boot/config.txt) to your `/boot/config.txt`
+- Raspberry Pi 4 Model B **Rev 1.2** — `arm_boost=1` **não** chega a 1,8 GHz (teto 1,5 GHz, governor `ondemand`).
+- Fonte: Xiaomi **MDY-11-EQ** 5 V/3 A (USB-A). A anterior gerava undervoltage (`throttled=0x50005`) com a TV em 4K.
+- HDMI: TV LG em **HDMI-A-2**, **1920×1080@60** via kanshi (o EDID preferia 4096×2160@30).
+- EEPROM do bootloader ainda em 2021; update 2025 **não** aplicado.
+- Sem câmera (`camera_auto_detect=0`). Cooler GPIO 14 @ 80 °C.
 
-And take a look in the official __config.txt guide__ to make your own adjusts under [THIS LINK](http://rpf.io/configtxt).
+## Referências
 
-___
-## Installing Docker
-
-* Add Docker PGP key
-  ```
-  $ curl -fsSL https://download.docker.com/linux/debian/gpg | $ sudoapt-key add -
-  ```
-* Add __ONE__ Docker APT repository
-  * 64 bits
-    ```
-    $ echo 'deb [arch=arm64] https://download.docker.com/linux/debian buster stable' | $ sudotee /etc/apt/sources.list.d/docker.list
-    ```
-  * 32 bits
-    ```
-    $ echo 'deb [arch=armhf] https://download.docker.com/linux/debian buster stable' | $ sudotee /etc/apt/sources.list.d/docker.list
-    ```
-* Update APT
-  ```
-  $ sudoapt-get update
-  ```
-* Install Docker
-  ```
-  $ sudoapt-get install --no-install-recommends docker-ce
-  ```
-* Start Docker service
-  ```
-  $ sudosystemctl start docker
-  ```
-* Enable Docker service with boot
-  ```
-  $ sudosystemctl enable docker
-  ```
-* If you are __using a non-root user__, add this user to the docker user-group
-  ```
-  $ sudousermod -aG docker $USER
-  ```
-* Test
-  ```
-  $ sudodocker run hello-world
-  ```
-
-___
-## References
-* [Raspberrypi config.txt](http://rpf.io/configtxt)
-* [RPi-config](https://github.com/Evilpaul/RPi-config)
-* [Installing Docker in Kali Linux](https://medium.com/@airman604/installing-docker-in-kali-linux-2017-1-fbaa4d1447fe)
-
-___
-## Regards 
-* [Paul Young - Evilpaul](https://github.com/Evilpaul)
-* [syb0rg](https://github.com/syb0rg)
-* [Airman](https://github.com/airman604)
+- [config.txt oficial](https://www.raspberrypi.com/documentation/computers/config_txt.html) (`rptl.io/configtxt`)
+- Snapshot Kali original: [configs/kali-2020/README.original.md](configs/kali-2020/README.original.md)

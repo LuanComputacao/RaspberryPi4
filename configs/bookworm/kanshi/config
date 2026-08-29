@@ -1,0 +1,6 @@
+profile {
+output HDMI-A-2 enable mode 1920x1080@60.000 position 0,0 transform normal
+}
+profile {
+output HDMI-A-1 enable mode 1920x1080@60.000 position 0,0 transform normal
+}
