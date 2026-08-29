@@ -53,4 +53,4 @@ otg_mode=1
 dtoverlay=dwc2,dr_mode=host
 
 [all]
-dtoverlay=gpio-fan,gpiopin=14,temp=80000
+dtoverlay=gpio-fan,gpiopin=14,temp=65000
